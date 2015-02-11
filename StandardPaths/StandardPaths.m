@@ -379,39 +379,39 @@ extern NSString *const NSURLIsExcludedFromBackupKey __attribute__((weak_import))
                 
                 break;
             }
-            case UIUserInterfaceIdiomDesktop:
-            {
-                //add HiDPI tiff extension
-                if ([@[@"", @"png", @"jpg", @"jpeg"] containsObject:[extension lowercaseString]])
-                {
-                    paths = [paths arrayByAddingObject:[fileOrPath stringByReplacingPathExtensionWithExtension:@"tiff"]];
-                }
-                
-                //add HD suffix
-                for (NSString *path in [paths objectEnumerator])
-                {
-                    paths = [paths arrayByAddingObject:[path stringByAppendingHDSuffix]];
-                }
-                
-                //check for Retina
-                if (SP_IS_RETINA())
-                {
-                    for (NSString *path in [paths objectEnumerator])
-                    {
-                        paths = [paths arrayByAddingObject:[path stringByAppendingSuffixForScale:3]];
-                        paths = [paths arrayByAddingObject:[path stringByAppendingSuffixForScale:2]];
-                        paths = [paths arrayByAddingObject:[path stringByAppendingDeviceScaleSuffix]];
-                    }
-                }
-                
-                //add Mac suffixes
-                for (NSString *path in [paths objectEnumerator])
-                {
-                    paths = [paths arrayByAddingObject:[path stringByAppendingPathSuffix:SPDesktopSuffix]];
-                }
-                
-                break;
-            }
+//            case UIUserInterfaceIdiomDesktop:
+//            {
+//                //add HiDPI tiff extension
+//                if ([@[@"", @"png", @"jpg", @"jpeg"] containsObject:[extension lowercaseString]])
+//                {
+//                    paths = [paths arrayByAddingObject:[fileOrPath stringByReplacingPathExtensionWithExtension:@"tiff"]];
+//                }
+//                
+//                //add HD suffix
+//                for (NSString *path in [paths objectEnumerator])
+//                {
+//                    paths = [paths arrayByAddingObject:[path stringByAppendingHDSuffix]];
+//                }
+//                
+//                //check for Retina
+//                if (SP_IS_RETINA())
+//                {
+//                    for (NSString *path in [paths objectEnumerator])
+//                    {
+//                        paths = [paths arrayByAddingObject:[path stringByAppendingSuffixForScale:3]];
+//                        paths = [paths arrayByAddingObject:[path stringByAppendingSuffixForScale:2]];
+//                        paths = [paths arrayByAddingObject:[path stringByAppendingDeviceScaleSuffix]];
+//                    }
+//                }
+//                
+//                //add Mac suffixes
+//                for (NSString *path in [paths objectEnumerator])
+//                {
+//                    paths = [paths arrayByAddingObject:[path stringByAppendingPathSuffix:SPDesktopSuffix]];
+//                }
+//                
+//                break;
+//            }
         }
         
         //try all paths
@@ -508,8 +508,8 @@ extern NSString *const NSURLIsExcludedFromBackupKey __attribute__((weak_import))
 - (NSString *)stringByAppendingSuffixForInterfaceIdiom:(UIUserInterfaceIdiom)idiom
 {
     NSDictionary *suffixes = @{@(UIUserInterfaceIdiomPhone): SPPhoneSuffix,
-                               @(UIUserInterfaceIdiomPad): SPPadSuffix,
-                               @(UIUserInterfaceIdiomDesktop): SPDesktopSuffix};
+                               @(UIUserInterfaceIdiomPad): SPPadSuffix/*,
+                               @(UIUserInterfaceIdiomDesktop): SPDesktopSuffix*/};
     
     return [self stringByAppendingPathSuffix:suffixes[@(idiom)] ?: @""];
 }
@@ -542,8 +542,8 @@ extern NSString *const NSURLIsExcludedFromBackupKey __attribute__((weak_import))
 - (UIUserInterfaceIdiom)interfaceIdiomFromSuffix
 {
     NSDictionary *suffixes = @{SPPhoneSuffix: @(UIUserInterfaceIdiomPhone),
-                               SPPadSuffix: @(UIUserInterfaceIdiomPad),
-                               SPDesktopSuffix: @(UIUserInterfaceIdiomDesktop)};
+                               SPPadSuffix: @(UIUserInterfaceIdiomPad)/*,
+                               SPDesktopSuffix: @(UIUserInterfaceIdiomDesktop)*/};
     
     NSNumber *suffix = suffixes[[self interfaceIdiomSuffix]];
     return suffix? (UIUserInterfaceIdiom)[suffix integerValue]: UI_USER_INTERFACE_IDIOM();
